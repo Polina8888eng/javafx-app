@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.javafxapp.AuthController"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: #ffffff;">
+
+    <stylesheets>
+        <URL value="@/style.css"/>
+    </stylesheets>
+
+    <padding>
+        <Insets top="80" right="20" bottom="40" left="20"/>
+    </padding>
+
+    <Label text="Text Editor" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+    <Label text="With Subscription" style="-fx-font-size: 16px; -fx-text-fill: #666666;"/>
+
+    <VBox spacing="15" alignment="CENTER" style="-fx-padding: 30 0 0 0;">
+        <TextField fx:id="usernameField" promptText="Username"
+                   style="-fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 25; -fx-border-radius: 25; -fx-font-size: 16px;"/>
+
+        <PasswordField fx:id="passwordField" promptText="Password"
+                       style="-fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 25; -fx-border-radius: 25; -fx-font-size: 16px;"/>
+    </VBox>
+
+    <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+        <Button fx:id="loginButton" text="LOG IN"
+                style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 25; -fx-font-size: 16px; -fx-font-weight: bold;"
+                onAction="#handleLogin"/>
+
+        <Button fx:id="registerButton" text="SIGN UP"
+                style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-pref-width: 280px; -fx-pref-height: 45px; -fx-border-color: #4a7dff; -fx-border-radius: 25; -fx-font-size: 16px; -fx-font-weight: bold;"
+                onAction="#handleRegister"/>
+    </VBox>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-size: 14px; -fx-padding: 10 0 0 0;"/>
+
+    <Button text="✕"
+            style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-font-size: 20px; -fx-padding: 20 0 0 0;"
+            onAction="#handleClose"/>
+</VBox>

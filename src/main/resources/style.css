@@ -1,0 +1,73 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #ffffff;
+}
+
+.button {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 0, 2, 0, 0);
+    -fx-font-weight: bold;
+}
+
+.button:pressed {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 0, 1, 0, 0);
+    -fx-translate-y: 1px;
+}
+
+.text-field, .password-field {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-padding: 0 15px;
+    -fx-font-size: 16px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #4a7dff;
+    -fx-border-width: 1.5px;
+}
+
+.plan-card {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+#loginButton {
+    -fx-effect: dropshadow(three-pass-box, rgba(74,125,255,0.3), 0, 5, 0, 0);
+}
+
+#loginButton:pressed {
+    -fx-effect: dropshadow(three-pass-box, rgba(74,125,255,0.3), 0, 3, 0, 0);
+}
+
+#registerButton {
+    -fx-background-insets: 0;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 25;
+}
+
+#payButton {
+    -fx-effect: dropshadow(three-pass-box, rgba(76,175,80,0.3), 0, 5, 0, 0);
+}
+
+#payButton:pressed {
+    -fx-effect: dropshadow(three-pass-box, rgba(76,175,80,0.3), 0, 3, 0, 0);
+}
+.current-plan {
+    -fx-background-color: #e0e0e0 !important;
+    -fx-text-fill: black !important;
+    -fx-border-color: #4CAF50 !important;
+    -fx-border-width: 2px !important;
+    -fx-border-radius: 5px !important;
+}
+.current-plan {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: black;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.current-plan:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
