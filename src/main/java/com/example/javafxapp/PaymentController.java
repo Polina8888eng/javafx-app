@@ -39,6 +39,8 @@ public class PaymentController {
     }
     @FXML
     private void handlePayment() {
+        boolean validationResult = validateCard();
+        System.out.println("Card validation: " + validationResult);
         if (!validateCard()) {
             showAlert("Error", "Please enter valid card details");
             return;
@@ -46,7 +48,8 @@ public class PaymentController {
         currentUser.setSubscriptionPlan(User.SubscriptionPlan.VIP);
         currentUser.setSubscriptionExpiryDate(LocalDate.now().plusMonths(1));
         try {
-            boolean updated = DatabaseService.updateUserPlan(
+            DatabaseService dbService = new DatabaseService();
+            boolean updated = dbService.updateUserPlan(
                     currentUser.getId(),
                     "VIP",
                     currentUser.getSubscriptionExpiryDate()
@@ -58,7 +61,7 @@ public class PaymentController {
             } else {
                 showAlert("Error", "Failed to update subscription plan.");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             showAlert("Error", "Database error: " + e.getMessage());
             e.printStackTrace();
         }

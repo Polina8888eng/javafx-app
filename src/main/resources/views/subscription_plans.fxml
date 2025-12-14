@@ -27,7 +27,7 @@
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Save in TXT format"/>
+                    <Label text="Save in HTML format"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✗" style="-fx-text-fill: #F44336;"/>
@@ -62,7 +62,7 @@
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="10+ custom fonts"/>
+                    <Label text="5+ custom fonts"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✗" style="-fx-text-fill: #F44336;"/>
@@ -84,7 +84,7 @@
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="50+ custom fonts"/>
+                    <Label text="10+ custom fonts"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>

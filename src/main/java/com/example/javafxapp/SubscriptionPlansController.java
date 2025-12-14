@@ -40,7 +40,7 @@ public class SubscriptionPlansController {
     }
     @FXML
     private void handleBasicPlan() {
-        openPaymentScreen("BASIC", "Advanced text formatting and 10+ custom fonts", 4.99);
+        openPaymentScreen("BASIC", "Advanced text formatting and 5+ custom fonts", 4.99);
     }
     @FXML
     private void handleVipPlan() {
@@ -62,38 +62,47 @@ public class SubscriptionPlansController {
             showError("Failed to load payment screen", e);
         }
     }
-    @FXML
-    public void initialize() {
-        System.out.println("SubscriptionPlansController initialized");
-    }
     private void updateButtonStates() {
         if (currentUser == null) return;
+
+        System.out.println("=== UPDATING BUTTON STATES ===");
+        System.out.println("Current user plan: " + currentUser.getSubscriptionPlan());
+
         freeButton.getStyleClass().remove("current-plan");
         basicButton.getStyleClass().remove("current-plan");
         vipButton.getStyleClass().remove("current-plan");
+
         resetButtons();
         switch (currentUser.getSubscriptionPlan()) {
             case FREE:
                 freeButton.getStyleClass().add("current-plan");
                 freeButton.setText("Current Plan");
-                freeButton.setDisable(false);
+                freeButton.setDisable(true);
+                basicButton.setDisable(false);
+                vipButton.setDisable(false);
                 break;
             case BASIC:
                 basicButton.getStyleClass().add("current-plan");
                 basicButton.setText("Current Plan");
                 basicButton.setDisable(true);
+                freeButton.setDisable(false);
+                vipButton.setDisable(false);
                 break;
             case VIP:
                 vipButton.getStyleClass().add("current-plan");
                 vipButton.setText("Current Plan");
                 vipButton.setDisable(true);
+                freeButton.setDisable(false);
+                basicButton.setDisable(false);
                 break;
         }
+
+        System.out.println("FREE button - disabled: " + freeButton.isDisabled() + ", text: " + freeButton.getText());
+        System.out.println("BASIC button - disabled: " + basicButton.isDisabled() + ", text: " + basicButton.getText());
+        System.out.println("VIP button - disabled: " + vipButton.isDisabled() + ", text: " + vipButton.getText());
+
         freeButton.applyCss();
         freeButton.layout();
-        System.out.println("Updating buttons. FREE button: "
-                + "disabled=" + freeButton.isDisabled()
-                + ", text=" + freeButton.getText());
     }
     public void initUser(User user) {
         this.currentUser = user;

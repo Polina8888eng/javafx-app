@@ -10,13 +10,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class AuthController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
-    @FXML private Button registerButton;
     @FXML private Label errorLabel;
 
     private double xOffset = 0;
@@ -54,7 +52,7 @@ public class AuthController {
             } else {
                 showError("Username already taken");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             showError("Registration error");
             e.printStackTrace();
         }
