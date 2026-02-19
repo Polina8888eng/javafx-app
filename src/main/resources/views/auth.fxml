@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
 
-<?import java.net.URL?>
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.javafxapp.AuthController"
-      alignment="CENTER"
-      spacing="20"
-      style="-fx-background-color: #ffffff;">
+<?import javafx.scene.Group?>
+<Group xmlns="http://javafx.com/javafx/17"
+       xmlns:fx="http://javafx.com/fxml/1"
+       fx:controller="com.example.javafxapp.AuthController">
 
-    <stylesheets>
-        <URL value="@/style.css"/>
-    </stylesheets>
 
-    <padding>
-        <Insets top="80" right="20" bottom="40" left="20"/>
-    </padding>
+    <Rectangle width="550" height="700"
+               fill="#c0c0c0"
+               arcWidth="30" arcHeight="30"
+               layoutX="25" layoutY="25"/>
 
-    <Label text="Text Editor" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
-    <Label text="With Subscription" style="-fx-font-size: 16px; -fx-text-fill: #666666;"/>
+    <Rectangle width="550" height="700"
+               fill="#808080"
+               arcWidth="30" arcHeight="30"
+               layoutX="20" layoutY="20"/>
 
-    <VBox spacing="15" alignment="CENTER" style="-fx-padding: 30 0 0 0;">
-        <TextField fx:id="usernameField" promptText="Username"
-                   style="-fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 25; -fx-border-radius: 25; -fx-font-size: 16px;"/>
+    <Rectangle width="510" height="640"
+               fill="#000000"
+               arcWidth="20" arcHeight="20"
+               layoutX="40" layoutY="50"/>
 
-        <PasswordField fx:id="passwordField" promptText="Password"
-                       style="-fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 25; -fx-border-radius: 25; -fx-font-size: 16px;"/>
+    <Rectangle width="490" height="600"
+               fill="#a8d8ea"
+               arcWidth="20" arcHeight="20"
+               layoutX="50" layoutY="70"/>
+
+    <VBox layoutX="70" layoutY="90"
+          prefWidth="450" prefHeight="560"
+          alignment="TOP_CENTER" spacing="25">
+
+        <Label text="Text Editor"
+               style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+
+        <Label text="With Subscription"
+               style="-fx-font-size: 18px; -fx-text-fill: #ffffff;"/>
+
+        <TextField fx:id="usernameField"
+                   promptText="Логин"
+                   prefWidth="380" prefHeight="50"
+                   style="-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 25;"/>
+
+        <PasswordField fx:id="passwordField"
+                       promptText="Пароль"
+                       prefWidth="380" prefHeight="50"
+                       style="-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 25;"/>
+
+        <Button fx:id="loginButton"
+                text="Войти"
+                prefWidth="380" prefHeight="55"
+                onAction="#handleLogin"
+                style="-fx-background-color: #4ecdc4; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 27;"/>
+
+        <Button fx:id="registerButton"
+                text="Зарегистрироваться"
+                prefWidth="380" prefHeight="45"
+                onAction="#handleRegister"
+                style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-border-radius: 22;"/>
+
+        <Label fx:id="errorLabel"
+               style="-fx-text-fill: #ff6b6b; -fx-font-size: 14px; -fx-font-weight: bold;" />
+
     </VBox>
 
-    <VBox spacing="10" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
-        <Button fx:id="loginButton" text="LOG IN"
-                style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 25; -fx-font-size: 16px; -fx-font-weight: bold;"
-                onAction="#handleLogin"/>
+    <Rectangle width="300" height="30"
+               fill="#808080"
+               layoutX="135" layoutY="720"/>
 
-        <Button fx:id="registerButton" text="SIGN UP"
-                style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-pref-width: 280px; -fx-pref-height: 45px; -fx-border-color: #4a7dff; -fx-border-radius: 25; -fx-font-size: 16px; -fx-font-weight: bold;"
-                onAction="#handleRegister"/>
-    </VBox>
-
-    <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-size: 14px; -fx-padding: 10 0 0 0;"/>
-
-    <Button text="✕"
-            style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-font-size: 20px; -fx-padding: 20 0 0 0;"
-            onAction="#handleClose"/>
-</VBox>
+</Group>

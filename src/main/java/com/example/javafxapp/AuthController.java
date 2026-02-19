@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class AuthController {
     @FXML private TextField usernameField;
@@ -85,10 +86,11 @@ public class AuthController {
         } catch (IOException e) {
             showError("Error loading subscription plans");
             e.printStackTrace();
-        }
-    }
-    private void showError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setStyle("-fx-text-fill: red;");
     }
 }
+private void showError(String message) {
+    errorLabel.setText(message);
+    errorLabel.setStyle("-fx-text-fill: red;");
+    }
+}
+

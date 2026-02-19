@@ -14,92 +14,92 @@
     <padding>
         <Insets top="40" right="20" bottom="20" left="20"/>
     </padding>
-    <Label text="Choose Your Plan" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="Выберите план подписки" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     <VBox spacing="15" alignment="CENTER">
         <VBox style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 15; -fx-padding: 20;"
               alignment="CENTER" spacing="10">
-            <Label text="FREE" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="Бесплатный тариф" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
             <Label style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
             <VBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 15 0;">
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Basic text editing"/>
+                    <Label text="Базовые функции редактирования"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Save in HTML format"/>
+                    <Label text="Сохранение в формате HTML"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Advanced formatting" style="-fx-text-fill: #999999;"/>
+                    <Label text="Расширенное форматирование" style="-fx-text-fill: #999999;"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Custom fonts" style="-fx-text-fill: #999999;"/>
+                    <Label text="Больше шрифтов" style="-fx-text-fill: #999999;"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Image insertion" style="-fx-text-fill: #999999;"/>
+                    <Label text="Вставка изображений" style="-fx-text-fill: #999999;"/>
                 </HBox>
             </VBox>
             <Button fx:id="freeButton"
-                    text="Select"
+                    text="Выбрать"
                     style="-fx-background-color: #e0e0e0; -fx-text-fill: black;"
                     onAction="#handleFreePlan"/>
         </VBox>
         <VBox style="-fx-background-color: white; -fx-border-color: #4a7dff; -fx-border-radius: 15; -fx-padding: 20;"
               alignment="CENTER" spacing="10">
-            <Label text="BASIC" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4a7dff;"/>
+            <Label text="Базовый тариф" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4a7dff;"/>
             <Label style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
             <VBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 15 0;">
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="All Free features"/>
+                    <Label text="Все функции бесплатного тарифа"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Advanced formatting"/>
+                    <Label text="Расширенное форматирование"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="5+ custom fonts"/>
+                    <Label text="5+ новых шрифтов"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Image insertion" style="-fx-text-fill: #999999;"/>
+                    <Label text="Вставка изображений" style="-fx-text-fill: #999999;"/>
                 </HBox>
             </VBox>
-            <Button fx:id="basicButton" text="Select"
+            <Button fx:id="basicButton" text="Выбрать"
                     style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-pref-width: 200px; -fx-pref-height: 40px; -fx-background-radius: 20;"
                     onAction="#handleBasicPlan"/>
         </VBox>
         <VBox style="-fx-background-color: white; -fx-border-color: #ff6b00; -fx-border-radius: 15; -fx-padding: 20;"
               alignment="CENTER" spacing="10">
-            <Label text="VIP" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ff6b00;"/>
+            <Label text="Премиум-тариф" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ff6b00;"/>
             <Label style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
             <VBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 15 0;">
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="All Basic features"/>
+                    <Label text="Все функции базового тарифа"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="10+ custom fonts"/>
+                    <Label text="10+ новых шрифтов"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Image insertion"/>
+                    <Label text="Вставка изображений"/>
                 </HBox>
                 <HBox spacing="5" alignment="CENTER_LEFT">
                     <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Cloud storage"/>
+                    <Label text="Облачное хранилище"/>
                 </HBox>
             </VBox>
-            <Button fx:id="vipButton" text="Select"
+            <Button fx:id="vipButton" text="Выбрать"
                     style="-fx-background-color: #ff6b00; -fx-text-fill: white; -fx-pref-width: 200px; -fx-pref-height: 40px; -fx-background-radius: 20;"
                     onAction="#handleVipPlan"/>
         </VBox>
     </VBox>
-    <Button text="Back" style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-font-size: 16px; -fx-padding: 20 0 0 0;"
+    <Button text="Назад" style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-font-size: 16px; -fx-padding: 20 0 0 0;"
             onAction="#handleBack"/>
 </VBox>

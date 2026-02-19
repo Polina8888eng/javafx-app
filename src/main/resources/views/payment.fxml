@@ -15,33 +15,33 @@
     <padding>
         <Insets top="40" right="20" bottom="20" left="20"/>
     </padding>
-    <Label text="Payment" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="Оплата" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     <VBox style="-fx-background-color: #f9f9f9; -fx-border-radius: 15; -fx-padding: 20; -fx-spacing: 15;" alignment="CENTER_LEFT">
-        <Label text="Plan:" style="-fx-font-weight: bold;"/>
+        <Label text="План:" style="-fx-font-weight: bold;"/>
         <Label fx:id="planLabel" style="-fx-font-size: 16px;"/>
-        <Label text="Description:" style="-fx-font-weight: bold;"/>
+        <Label text="Функции:" style="-fx-font-weight: bold;"/>
         <Label fx:id="descriptionLabel" style="-fx-font-size: 14px; -fx-text-fill: #666666; -fx-wrap-text: true;" maxWidth="300"/>
-        <Label text="Price:" style="-fx-font-weight: bold;"/>
+        <Label text="Стоимость:" style="-fx-font-weight: bold;"/>
         <Label fx:id="priceLabel" style="-fx-font-size: 16px;"/>
     </VBox>
     <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 20 0;">
-        <Label text="Card Details" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
-        <TextField fx:id="cardNumberField" promptText="Card Number"
+        <Label text="Реквизиты карты" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+        <TextField fx:id="cardNumberField" promptText="Номер карты"
                    style="-fx-pref-width: 280px; -fx-pref-height: 45px; -fx-background-radius: 10; -fx-border-radius: 10; -fx-font-size: 16px;"/>
         <HBox spacing="10">
-            <TextField fx:id="expiryDateField" promptText="MM/YY"
+            <TextField fx:id="expiryDateField" promptText="MM/ГГ"
                        style="-fx-pref-width: 120px; -fx-pref-height: 45px; -fx-background-radius: 10; -fx-border-radius: 10; -fx-font-size: 16px;"/>
             <TextField fx:id="cvvField" promptText="CVV"
                        style="-fx-pref-width: 80px; -fx-pref-height: 45px; -fx-background-radius: 10; -fx-border-radius: 10; -fx-font-size: 16px;"/>
         </HBox>
     </VBox>
     <VBox spacing="5" alignment="CENTER_RIGHT" style="-fx-padding: 10 0;">
-        <Label text="Total:" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+        <Label text="Сумма:" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
         <Label fx:id="totalLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
     </VBox>
-    <Button fx:id="payButton" text="PAY NOW"
+    <Button fx:id="payButton" text="Оплатить"
             style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-pref-width: 280px; -fx-pref-height: 50px; -fx-background-radius: 25; -fx-font-size: 18px; -fx-font-weight: bold;"
             onAction="#handlePayment"/>
-    <Button text="Back" style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-font-size: 16px; -fx-padding: 10 0 0 0;"
+    <Button text="Назад" style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-font-size: 16px; -fx-padding: 10 0 0 0;"
             onAction="#handleBack"/>
 </VBox>

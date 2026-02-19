@@ -61,7 +61,6 @@ public class DatabaseService {
 
     public boolean registerUser(String username, String password) {
         try {
-            System.out.println("=== REGISTRATION DEBUG ===");
             System.out.println("Username: " + username);
 
             boolean exists = userExists(username);

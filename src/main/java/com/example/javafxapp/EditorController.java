@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 
 public class EditorController {
     @FXML private WebView webView;
@@ -43,6 +44,17 @@ public class EditorController {
         setupEditorFeatures();
         updateUI();
         setupTooltips();
+
+    }
+
+    @FXML
+    private void handleCancelSubscription() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Отмена подписки");
+        alert.setHeaderText("Функция в разработке");
+        alert.setContentText("Возможность отмены подписки появится в следующем обновлении.");
+        alert.showAndWait();
 
     }
 
