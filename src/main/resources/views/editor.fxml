@@ -1,132 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.web.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.web.WebView?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Separator?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.javafxapp.EditorController"
-            prefWidth="1000" prefHeight="800">
+            prefWidth="1000" prefHeight="800"
+            style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #e8f5e8, #f5e8f0, #f5dde8, #e0f0e0);">
 
     <center>
         <StackPane>
-            <!-- Монитор (центрируется автоматически) -->
-            <VBox alignment="CENTER" spacing="0">
-                <!-- Верхняя часть монитора -->
-                <StackPane>
-                    <Rectangle width="900" height="750"
-                               fill="#808080"
-                               arcWidth="40" arcHeight="40"/>
-                    <Rectangle width="850" height="700"
-                               fill="#000000"
-                               arcWidth="30" arcHeight="30"/>
-                    <Rectangle width="830" height="680"
-                               fill="#a8d8ea"
-                               arcWidth="25" arcHeight="25"/>
-                </StackPane>
-
-                <!-- Основание монитора -->
-                <VBox alignment="CENTER" spacing="0">
-                    <Rectangle width="300" height="30"
-                               fill="#808080"
-                               arcWidth="15" arcHeight="15"/>
-                    <Rectangle width="350" height="15"
-                               fill="#666666"
-                               arcWidth="10" arcHeight="10"/>
-                </VBox>
-            </VBox>
-
-            <!-- КОНТЕНТ (поверх монитора) -->
-            <VBox maxWidth="780" maxHeight="640"
-                  spacing="15"
-                  style="-fx-background-color: transparent;">
-
+            <VBox maxWidth="900" maxHeight="700"
+                  spacing="10"
+                  style="-fx-background-color: transparent;"
+                  alignment="TOP_CENTER">
                 <padding>
-                    <Insets top="30" right="30" bottom="30" left="30"/>
+                    <Insets top="15" right="20" bottom="15" left="20"/>
                 </padding>
 
-                <!-- Заголовок -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Button text="←"
-                            style="-fx-background-color: transparent; -fx-font-size: 24px;"
+                            style="-fx-background-color: transparent; -fx-font-size: 28px; -fx-text-fill: #ff99cc; -fx-cursor: hand;"
                             onAction="#handleBack"/>
+                    <Label text="🌸" style="-fx-font-size: 28px;"/>
                     <Label fx:id="titleLabel"
-                           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #7a4d4d;"/>
                 </HBox>
 
-                <!-- Информация о подписке -->
+
                 <VBox fx:id="subscriptionInfo"
-                      style="-fx-background-color: #ffffff; -fx-background-radius: 15; -fx-padding: 15;">
+                      style="-fx-background-color: rgba(255,245,245,0.85); -fx-background-radius: 20; -fx-padding: 8 15; -fx-border-color: #ffb3c6; -fx-border-radius: 20;">
                     <Label fx:id="subscriptionLabel"
-                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                           style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #b3668c;"/>
                     <Label fx:id="daysRemainingLabel"
-                           style="-fx-font-size: 14px; -fx-text-fill: #666666;"/>
+                           style="-fx-font-size: 12px; -fx-text-fill: #8b5a5a;"/>
                 </VBox>
 
-                <!-- WebView -->
-                <WebView fx:id="webView"
-                         VBox.vgrow="ALWAYS"
-                         style="-fx-background-color: #ffffff; -fx-background-radius: 15;"/>
+                <HBox spacing="12" alignment="CENTER"
+                      style="-fx-background-color: rgba(255,255,240,0.7); -fx-background-radius: 30; -fx-padding: 6 15;">
+                    <Button fx:id="saveButton" text="💾 Сохранить"
+                            style="-fx-background-color: linear-gradient(to bottom, #c4e0c4, #a8d0a8); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"
+                            onAction="#handleSave"/>
+                    <Button text="📂 Открыть"
+                            style="-fx-background-color: linear-gradient(to bottom, #c4e0c4, #a8d0a8); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"
+                            onAction="#handleOpen"/>
+                    <ComboBox fx:id="fontComboBox" promptText="Шрифт"
+                              style="-fx-background-radius: 20; -fx-background-color: #fff0f5; -fx-font-size: 12px; -fx-padding: 3 10; -fx-border-color: #ffb3c6; -fx-border-radius: 20;"/>
+                </HBox>
 
-                <!-- Премиум функции -->
-                <VBox fx:id="premiumFeatures"
-                      alignment="CENTER"
-                      spacing="15"
-                      style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-padding: 20;">
-
-                    <HBox spacing="20" alignment="CENTER">
-                        <Button fx:id="insertImageButton"
-                                text="Вставка изображения"
-                                prefWidth="200" prefHeight="45"
-                                style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-background-radius: 22;"
-                                onAction="#handleInsertImage"/>
-
-                        <Button fx:id="changeFontButton"
-                                text="Смена шрифта"
-                                prefWidth="200" prefHeight="45"
-                                style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-background-radius: 22;"
-                                onAction="#handleChangeFont"/>
-                    </HBox>
-                </VBox>
-
-                <!-- Кнопки управления -->
-                <HBox alignment="CENTER" spacing="15">
-                    <Button fx:id="subscribeButton"
-                            text="Сменить план"
-                            prefWidth="200" prefHeight="45"
-                            style="-fx-background-color: #ff6b00; -fx-text-fill: white; -fx-background-radius: 22; -fx-font-weight: bold;"
+                <HBox spacing="12" alignment="CENTER"
+                      style="-fx-background-color: rgba(255,255,240,0.7); -fx-background-radius: 30; -fx-padding: 6 15;">
+                    <Button fx:id="insertImageButton" text="🌸 Вставить изображение"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffb3c6, #ff99cc); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"
+                            onAction="#handleInsertImage"/>
+                    <Button fx:id="cancelSubscriptionBtn" text="❌ Отменить подписку"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffcccc, #ffb3b3); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"
+                            onAction="#handleCancelSubscription"/>
+                    <Button fx:id="subscribeButton" text="🌸 Сменить план"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffb3c6, #ff99cc); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"
                             onAction="#handleUpgrade"/>
-
-                    <Button fx:id="formatButton"
-                            text="Формат"
-                            prefWidth="150" prefHeight="45"
-                            style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-background-radius: 22;"
+                    <Button fx:id="formatButton" text="🌿 Формат"
+                            style="-fx-background-color: linear-gradient(to bottom, #c4e0c4, #a8d0a8); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"
                             onAction="#handleFormat"/>
                 </HBox>
 
-                <!-- Нижние кнопки -->
-                <HBox alignment="CENTER" spacing="15">
-                    <Button fx:id="saveButton"
-                            text="Сохранить"
-                            prefWidth="130" prefHeight="40"
-                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 20;"
-                            onAction="#handleSave"/>
+                <HBox spacing="8" alignment="CENTER"
+                      style="-fx-background-color: rgba(255,255,240,0.7); -fx-background-radius: 30; -fx-padding: 5 15;">
+                    <Button fx:id="boldButton" text="B" onAction="#handleBold"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffd9e6, #ffb3c6); -fx-text-fill: #4d2e2e; -fx-font-weight: bold; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Button fx:id="italicButton" text="I" onAction="#handleItalic"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffd9e6, #ffb3c6); -fx-text-fill: #4d2e2e; -fx-font-style: italic; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Button fx:id="underlineButton" text="U" onAction="#handleUnderline"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffd9e6, #ffb3c6); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Button fx:id="strikeButton" text="S" onAction="#handleStrikethrough"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffd9e6, #ffb3c6); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Separator orientation="VERTICAL" style="-fx-background-color: #ffb3c6;"/>
+                    <Button fx:id="alignLeftButton" text="⬅️" onAction="#handleAlignLeft"
+                            style="-fx-background-color: linear-gradient(to bottom, #e0f0e0, #c4e0c4); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Button fx:id="alignCenterButton" text="⬌" onAction="#handleAlignCenter"
+                            style="-fx-background-color: linear-gradient(to bottom, #e0f0e0, #c4e0c4); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Button fx:id="alignRightButton" text="➡️" onAction="#handleAlignRight"
+                            style="-fx-background-color: linear-gradient(to bottom, #e0f0e0, #c4e0c4); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Separator orientation="VERTICAL" style="-fx-background-color: #ffb3c6;"/>
+                    <Button fx:id="orderedListButton" text="1." onAction="#handleOrderedList"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffd9e6, #ffb3c6); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Button fx:id="unorderedListButton" text="•" onAction="#handleUnorderedList"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffd9e6, #ffb3c6); -fx-text-fill: #4d2e2e; -fx-background-radius: 20; -fx-min-width: 40; -fx-border-color: white; -fx-border-radius: 20;"/>
+                    <Separator orientation="VERTICAL" style="-fx-background-color: #ffb3c6;"/>
+                    <ColorPicker fx:id="textColorPicker" promptText="Цвет"
+                                 style="-fx-background-radius: 20; -fx-background-color: #fff0f5; -fx-border-color: #ffb3c6; -fx-border-radius: 20;"/>
+                    <ComboBox fx:id="fontSizeCombo" promptText="Размер" prefWidth="70"
+                              style="-fx-background-radius: 20; -fx-background-color: #fff0f5; -fx-border-color: #ffb3c6; -fx-border-radius: 20;"/>
+                </HBox>
 
-                    <Button fx:id="upgradeButton"
-                            text="Смена плана"
-                            prefWidth="130" prefHeight="40"
-                            style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-background-radius: 20;"
-                            onAction="#handleUpgrade"
-                            visible="false"/>
+                <WebView fx:id="webView"
+                         VBox.vgrow="ALWAYS"
+                         style="-fx-background-color: #fff9f9; -fx-background-radius: 20; -fx-border-color: #c4e0c4; -fx-border-radius: 20; -fx-border-width: 2;"/>
+                <HBox spacing="12" alignment="CENTER"
+                      style="-fx-background-color: rgba(255,255,240,0.7); -fx-background-radius: 30; -fx-padding: 6 15;">
+                    <Button fx:id="sourceToggleButton" text="Исходный код"
+                            onAction="#handleToggleSource"
+                            style="-fx-background-color: linear-gradient(to bottom, #d4c0e0, #b399d4);
+                   -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 15;
+                   -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"/>
+                    <ComboBox fx:id="tagCombo" promptText="Вставить тег" onAction="#handleInsertTagFromCombo"
+                              prefWidth="150"
+                              style="-fx-background-radius: 20; -fx-background-color: #fff0f5;
+                     -fx-font-size: 12px; -fx-padding: 3 10;
+                     -fx-border-color: #d4c0e0; -fx-border-radius: 20;"/>
+                </HBox>
 
-                    <Button fx:id="cancelSubscriptionBtn"
-                            text="Отменить подписку"
-                            prefWidth="170" prefHeight="40"
-                            style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 20; -fx-font-weight: bold;"
-                            onAction="#handleCancelSubscription"/>
+                <HBox spacing="12" alignment="CENTER"
+                      style="-fx-background-color: rgba(255,255,240,0.7); -fx-background-radius: 30; -fx-padding: 6 15;">
+                    <TextField fx:id="findField" promptText="Найти"
+                               style="-fx-background-radius: 20; -fx-background-color: #fffaf0; -fx-padding: 5 12; -fx-border-color: #ffb3c6; -fx-border-radius: 20;"
+                               HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <TextField fx:id="replaceField" promptText="Заменить на"
+                               style="-fx-background-radius: 20; -fx-background-color: #fffaf0; -fx-padding: 5 12; -fx-border-color: #ffb3c6; -fx-border-radius: 20;"
+                               HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button text="Найти" onAction="#handleFind"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffb3c6, #ff99cc); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 18; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"/>
+                    <Button text="Заменить всё" onAction="#handleReplaceAll"
+                            style="-fx-background-color: linear-gradient(to bottom, #ffb3c6, #ff99cc); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 18; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"/>
+                    <Button text="📊 Статистика" onAction="#handleStatistics"
+                            style="-fx-background-color: linear-gradient(to bottom, #c4e0c4, #a8d0a8); -fx-text-fill: #4d2e2e; -fx-background-radius: 25; -fx-padding: 5 18; -fx-font-weight: bold; -fx-border-color: white; -fx-border-radius: 25;"/>
                 </HBox>
             </VBox>
         </StackPane>

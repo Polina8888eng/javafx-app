@@ -1,6 +1,9 @@
 package com.example.javafxapp;
 
 import com.example.model.User;
+import com.example.service.DatabaseService;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class SubscriptionPlansController {
     @FXML
@@ -21,122 +28,257 @@ public class SubscriptionPlansController {
     private Button vipButton;
     private User currentUser;
     @FXML
-    private void handleFreePlan() {
-        currentUser.setSubscriptionPlan(User.SubscriptionPlan.FREE);
+    private Button paintButton;
+
+    public void initUser(User user) {
+        this.currentUser = user;
         updateButtonStates();
-        openEditor("FREE");
     }
+
+    @FXML
+    private void handleFreePlan() {
+        User.SubscriptionPlan currentPlan = currentUser.getSubscriptionPlan();
+        System.out.println("Переход на Бесплатный план");
+        System.out.println("Текущий план: " + currentPlan);
+
+        if (currentPlan == User.SubscriptionPlan.FREE) {
+            System.out.println("Уже Бесплатный план, открываем редактор");
+            openEditor("FREE");
+            return;
+        }
+        String message;
+        if (currentPlan == User.SubscriptionPlan.BASIC) {
+            message = "Вы уверены, что хотите перейти на Бесплатный план?\n\n" +
+                    "Вы потеряете доступ к:\n" +
+                    "- Расширенному форматированию текста\n" +
+                    "- Дополнительным шрифтам\n\n" +
+                    "Ваша подписка на Базовый план будет отменена.";
+        } else if (currentPlan == User.SubscriptionPlan.VIP) {
+            message = "Вы уверены, что хотите перейти на Бесплатный план?\n\n" +
+                    "Вы потеряете доступ к:\n" +
+                    "- Расширенному форматированию\n" +
+                    "- Дополнительным шрифтам\n\n" +
+                    "Ваша подписка на VIP план будет отменена.";
+        } else {
+            message = "Вы уверены, что хотите перейти на Бесплатный план?";
+        }
+
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Переход на бесплатный план");
+        confirmAlert.setHeaderText("Подтверждение действия");
+        confirmAlert.setContentText(message);
+
+        ButtonType buttonYes = new ButtonType("Да, перейти на Бесплатный");
+        ButtonType buttonNo = new ButtonType("Нет, отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+        confirmAlert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+        Optional<ButtonType> result = confirmAlert.showAndWait();
+        if (result.isPresent() && result.get() == buttonYes) {
+            try {
+                DatabaseService dbService = new DatabaseService();
+                boolean updated = dbService.updateUserPlan(
+                        currentUser.getId(),
+                        "FREE",
+                        null
+                );
+
+                if (updated) {
+                    System.out.println("План изменен на Бесплатный");
+
+                    User refreshedUser = dbService.getUserById(currentUser.getId());
+                    if (refreshedUser != null) {
+                        currentUser = refreshedUser;
+                        System.out.println("Пользователь обновлен: " + currentUser.getSubscriptionPlan());
+
+                        showAlert("Успех", "Вы перешли на Бесплатный план");
+                        updateButtonStates();
+                        openEditor("FREE");
+                    }
+                } else {
+                    System.out.println("Не удалось обновить план");
+                    showAlert("Ошибка", "Не удалось изменить план подписки");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Ошибка", "Ошибка базы данных: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Отмена перехода на Бесплатный план");
+        }
+    }
+
+    @FXML
+    private void handleBasicPlan() {
+        User.SubscriptionPlan currentPlan = currentUser.getSubscriptionPlan();
+        if (currentPlan == User.SubscriptionPlan.BASIC) {
+            System.out.println("Уже Базовый план, открываем редактор");
+            openEditor("BASIC");
+            return;
+        }
+
+        if (currentPlan == User.SubscriptionPlan.FREE) {
+            openPaymentScreen("Базовый", "Расширенное форматирование, +7 доступных шрифтов", 150.00, User.SubscriptionPlan.BASIC);
+        } else if (currentPlan == User.SubscriptionPlan.VIP) {
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Переход на Базовый");
+            confirmAlert.setHeaderText("Вы уверены?");
+            confirmAlert.setContentText("Вы переходите с VIP на Базовый план. Вы потеряете доступ к вставке изображений и другим функциям VIP-плана.");
+
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                openPaymentScreen("Базовый", "Все функции бесплатного плана, расширенное форматирование, сохранение в формате docx и 3 доступных шрифта", 150.00, User.SubscriptionPlan.BASIC);
+            }
+        }
+    }
+
+    @FXML
+    private void handleVipPlan() {
+        User.SubscriptionPlan currentPlan = currentUser.getSubscriptionPlan();
+        System.out.println("VIP-план выбран");
+        System.out.println("Текущий план пользователя: " + currentPlan);
+
+        if (currentPlan == User.SubscriptionPlan.VIP) {
+            System.out.println("Уже VIP план, открываем редактор без оплаты");
+            openEditor("VIP");
+            return;
+        }
+
+        if (currentPlan == User.SubscriptionPlan.FREE) {
+            System.out.println("FREE -> VIP: переход к оплате");
+            openPaymentScreen("VIP", "Все функции Базового плана, сохранение в форматах html и docx, вставка изображений", 300.00, User.SubscriptionPlan.VIP);
+        }
+        else if (currentPlan == User.SubscriptionPlan.BASIC) {
+            System.out.println("BASIC -> VIP: переход к оплате");
+
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Апгрейд до VIP");
+            confirmAlert.setHeaderText("Подтверждение");
+            confirmAlert.setContentText("Вы уверены, что хотите улучшить план до VIP?");
+
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                openPaymentScreen("VIP", "Все функции Базового плана, сохранение в форматах html и docx, вставка изображений", 300.00, User.SubscriptionPlan.VIP);
+            }
+        }
+    }
+
     private void openEditor(String planType) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/editor.fxml"));
             Parent root = loader.load();
             EditorController controller = loader.getController();
             controller.initUser(currentUser, planType);
-            Stage stage = (Stage) freeButton.getScene().getWindow();
-            stage.setScene(new Scene(root, 390, 844));
+            Stage stage = (Stage) basicButton.getScene().getWindow();
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
-            showError("Failed to load editor", e);
+            showError("Ошибка открытия планов подписки", e);
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleOpenPaint() {
+        try {
+            Stage paintStage = new Stage();
+            paintStage.setTitle("Графический редактор");
+
+            CanvasController paintApp = new CanvasController();
+            paintApp.start(paintStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            showError("Не удалось открыть редактор",e);
         }
     }
     @FXML
-    private void handleBasicPlan() {
-        openPaymentScreen("BASIC", "Advanced text formatting and 5+ custom fonts", 4.99);
-    }
-    @FXML
-    private void handleVipPlan() {
-        openPaymentScreen("VIP", "All features including image insertion and cloud storage", 9.99);
-    }
-    @FXML
     private void handleBack() {
-        loadScene("/views/auth.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/auth.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) basicButton.getScene().getWindow();
+            stage.getScene().setRoot(root);
+
+        } catch (IOException e) {
+            showError("Ошибка загрузки планов подписки", e);
+            e.printStackTrace();
+        }
     }
-    private void openPaymentScreen(String planName, String description, double price) {
+    private void openPaymentScreen(String planName, String description, double price, User.SubscriptionPlan plan) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/payment.fxml"));
             Parent root = loader.load();
             PaymentController controller = loader.getController();
-            controller.initData(planName, description, price, currentUser);
-            Stage stage = (Stage) freeButton.getScene().getWindow();
-            stage.setScene(new Scene(root, 390, 844));
+            controller.initData(planName, description, price, currentUser, plan);
+
+            Stage stage = (Stage) basicButton.getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+
         } catch (IOException e) {
-            showError("Failed to load payment screen", e);
+            showError("Ошибка загрузки экрана оплаты", e);
+            e.printStackTrace();
         }
     }
+
     private void updateButtonStates() {
-        if (currentUser == null) return;
+        resetButtons();
 
-        System.out.println("=== UPDATING BUTTON STATES ===");
-        System.out.println("Current user plan: " + currentUser.getSubscriptionPlan());
+        User.SubscriptionPlan currentPlan = currentUser.getSubscriptionPlan();
+        System.out.println("Обновление кнопок для плана: " + currentPlan);
 
+        switch (currentPlan) {
+            case FREE:
+                freeButton.getStyleClass().add("current-plan");
+                freeButton.setText("✓ Текущий план (FREE)");
+                freeButton.setUserData("CURRENT_PLAN");
+                break;
+            case BASIC:
+                basicButton.getStyleClass().add("current-plan");
+                basicButton.setText("✓ Текущий план (BASIC)");
+                basicButton.setUserData("CURRENT_PLAN");
+                break;
+            case VIP:
+                vipButton.getStyleClass().add("current-plan");
+                vipButton.setText("✓ Текущий план (VIP)");
+                vipButton.setUserData("CURRENT_PLAN");
+                break;
+        }
+    }
+
+    private void resetButtons() {
         freeButton.getStyleClass().remove("current-plan");
         basicButton.getStyleClass().remove("current-plan");
         vipButton.getStyleClass().remove("current-plan");
 
-        resetButtons();
-        switch (currentUser.getSubscriptionPlan()) {
-            case FREE:
-                freeButton.getStyleClass().add("current-plan");
-                freeButton.setText("Current Plan");
-                freeButton.setDisable(true);
-                basicButton.setDisable(false);
-                vipButton.setDisable(false);
-                break;
-            case BASIC:
-                basicButton.getStyleClass().add("current-plan");
-                basicButton.setText("Current Plan");
-                basicButton.setDisable(true);
-                freeButton.setDisable(false);
-                vipButton.setDisable(false);
-                break;
-            case VIP:
-                vipButton.getStyleClass().add("current-plan");
-                vipButton.setText("Current Plan");
-                vipButton.setDisable(true);
-                freeButton.setDisable(false);
-                basicButton.setDisable(false);
-                break;
-        }
+        freeButton.setText("FREE");
+        basicButton.setText("BASIC");
+        vipButton.setText("VIP");
 
-        System.out.println("FREE button - disabled: " + freeButton.isDisabled() + ", text: " + freeButton.getText());
-        System.out.println("BASIC button - disabled: " + basicButton.isDisabled() + ", text: " + basicButton.getText());
-        System.out.println("VIP button - disabled: " + vipButton.isDisabled() + ", text: " + vipButton.getText());
+        freeButton.setUserData(null);
+        basicButton.setUserData(null);
+        vipButton.setUserData(null);
 
-        freeButton.applyCss();
-        freeButton.layout();
-    }
-    public void initUser(User user) {
-        this.currentUser = user;
-        updateButtonStates();
-    }
-    private void resetButtons() {
-        String defaultFreeStyle = "-fx-background-color: #e0e0e0; -fx-text-fill: black;";
-        String defaultBasicStyle = "-fx-background-color: #4a7dff; -fx-text-fill: white;";
-        String defaultVipStyle = "-fx-background-color: #ff6b00; -fx-text-fill: white;";
-        freeButton.setStyle(defaultFreeStyle);
         freeButton.setDisable(false);
-        freeButton.setText("Select");
-        basicButton.setStyle(defaultBasicStyle);
         basicButton.setDisable(false);
-        basicButton.setText("Select");
-        vipButton.setStyle(defaultVipStyle);
         vipButton.setDisable(false);
-        vipButton.setText("Select");
     }
-    private void loadScene(String fxmlPath) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage stage = (Stage) freeButton.getScene().getWindow();
-            stage.setScene(new Scene(root, 390, 844));
-        } catch (IOException e) {
-            showError("Failed to load scene", e);
-        }
-    }
+
     private void showError(String message, Exception e) {
         e.printStackTrace();
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
+        alert.setTitle("Ошибка");
         alert.setHeaderText(message);
         alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }

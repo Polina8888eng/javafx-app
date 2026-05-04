@@ -1,74 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.Group?>
-<Group xmlns="http://javafx.com/javafx/17"
-       xmlns:fx="http://javafx.com/fxml/1"
-       fx:controller="com.example.javafxapp.AuthController">
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.javafxapp.AuthController"
+            style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #e8f5e8, #f5e8f0, #f5dde8, #e0f0e0);">
 
+    <center>
+        <AnchorPane>
+            <StackPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                       AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                       alignment="CENTER">
+                <VBox alignment="CENTER" spacing="20" maxWidth="550" maxHeight="750"
+                      style="-fx-background-color: rgba(255,250,240,0.3);
+                             -fx-background-radius: 50;
+                             -fx-border-color: rgba(255,240,250,0.6);
+                             -fx-border-radius: 50;
+                             -fx-border-width: 2;
+                             -fx-padding: 25 30;">
 
-    <Rectangle width="550" height="700"
-               fill="#c0c0c0"
-               arcWidth="30" arcHeight="30"
-               layoutX="25" layoutY="25"/>
+                    <Label text="🌸"
+                           style="-fx-font-size: 60px; -fx-text-fill: #ff99cc;"/>
 
-    <Rectangle width="550" height="700"
-               fill="#808080"
-               arcWidth="30" arcHeight="30"
-               layoutX="20" layoutY="20"/>
+                    <Label text="SmartWrite"
+                           style="-fx-font-size: 48px; -fx-font-weight: bold;
+                                  -fx-text-fill: #7a4d4d;
+                                  -fx-font-family: 'Segoe UI Light', 'Helvetica Neue', sans-serif;"/>
 
-    <Rectangle width="510" height="640"
-               fill="#000000"
-               arcWidth="20" arcHeight="20"
-               layoutX="40" layoutY="50"/>
+                    <Label text="текстовый редактор с широким спектром возможностей"
+                           style="-fx-font-size: 18px; -fx-text-fill: #8b5a5a;
+                                  -fx-font-family: 'Segoe UI', sans-serif;
+                                  -fx-font-weight: 500;"
+                           wrapText="true"
+                           textAlignment="CENTER"
+                           maxWidth="450"
+                           minHeight="60"/>
 
-    <Rectangle width="490" height="600"
-               fill="#a8d8ea"
-               arcWidth="20" arcHeight="20"
-               layoutX="50" layoutY="70"/>
+                    <TextField fx:id="usernameField"
+                               promptText="Логин"
+                               prefWidth="380" prefHeight="55"
+                               maxWidth="380"
+                               style="-fx-background-color: rgba(255,240,245,0.7);
+                                      -fx-background-radius: 30;
+                                      -fx-border-color: #ffb3c6;
+                                      -fx-border-radius: 30;
+                                      -fx-border-width: 2;
+                                      -fx-text-fill: #b3668c;
+                                      -fx-prompt-text-fill: #b3868c;
+                                      -fx-font-size: 16px;
+                                      -fx-font-weight: bold;
+                                      -fx-padding: 10 20;"/>
 
-    <VBox layoutX="70" layoutY="90"
-          prefWidth="450" prefHeight="560"
-          alignment="TOP_CENTER" spacing="25">
+                    <PasswordField fx:id="passwordField"
+                                   promptText="Пароль"
+                                   prefWidth="380" prefHeight="55"
+                                   maxWidth="380"
+                                   style="-fx-background-color: rgba(255,240,245,0.7);
+                                          -fx-background-radius: 30;
+                                          -fx-border-color: #c4e0c4;
+                                          -fx-border-radius: 30;
+                                          -fx-border-width: 2;
+                                          -fx-text-fill: #6b8e6b;
+                                          -fx-prompt-text-fill: #7a9e7a;
+                                          -fx-font-size: 16px;
+                                          -fx-font-weight: bold;
+                                          -fx-padding: 10 20;"/>
 
-        <Label text="Text Editor"
-               style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                    <Button fx:id="loginButton"
+                            text="Войти"
+                            prefWidth="380" prefHeight="55"
+                            maxWidth="380"
+                            onAction="#handleLogin"
+                            style="-fx-background-color: linear-gradient(to right, #ffb3c6, #ff99cc);
+                                   -fx-background-radius: 30;
+                                   -fx-border-color: white;
+                                   -fx-border-radius: 30;
+                                   -fx-border-width: 2;
+                                   -fx-text-fill: #4d2e2e;
+                                   -fx-font-size: 20px;
+                                   -fx-font-weight: bold;
+                                   -fx-cursor: hand;"/>
 
-        <Label text="With Subscription"
-               style="-fx-font-size: 18px; -fx-text-fill: #ffffff;"/>
+                    <Button fx:id="registerButton"
+                            text="Зарегистрироваться"
+                            prefWidth="380" prefHeight="45"
+                            maxWidth="380"
+                            onAction="#handleRegister"
+                            style="-fx-background-color: linear-gradient(to right, #c4e0c4, #a8d0a8);
+                                   -fx-background-radius: 30;
+                                   -fx-border-color: white;
+                                   -fx-border-radius: 30;
+                                   -fx-border-width: 2;
+                                   -fx-text-fill: #4d2e2e;
+                                   -fx-font-size: 18px;
+                                   -fx-font-weight: bold;
+                                   -fx-cursor: hand;"/>
 
-        <TextField fx:id="usernameField"
-                   promptText="Логин"
-                   prefWidth="380" prefHeight="50"
-                   style="-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 25;"/>
+                    <Label fx:id="errorLabel"
+                           style="-fx-text-fill: #cc6677; -fx-font-size: 14px; -fx-font-weight: bold;"
+                           wrapText="true"
+                           textAlignment="CENTER"
+                           maxWidth="350"/>
 
-        <PasswordField fx:id="passwordField"
-                       promptText="Пароль"
-                       prefWidth="380" prefHeight="50"
-                       style="-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 25;"/>
-
-        <Button fx:id="loginButton"
-                text="Войти"
-                prefWidth="380" prefHeight="55"
-                onAction="#handleLogin"
-                style="-fx-background-color: #4ecdc4; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 27;"/>
-
-        <Button fx:id="registerButton"
-                text="Зарегистрироваться"
-                prefWidth="380" prefHeight="45"
-                onAction="#handleRegister"
-                style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-border-color: #ffffff; -fx-border-width: 2; -fx-border-radius: 22;"/>
-
-        <Label fx:id="errorLabel"
-               style="-fx-text-fill: #ff6b6b; -fx-font-size: 14px; -fx-font-weight: bold;" />
-
-    </VBox>
-
-    <Rectangle width="300" height="30"
-               fill="#808080"
-               layoutX="135" layoutY="720"/>
-
-</Group>
+                </VBox>
+            </StackPane>
+        </AnchorPane>
+    </center>
+</BorderPane>

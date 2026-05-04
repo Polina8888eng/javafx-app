@@ -1,105 +1,306 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import java.net.URL?>
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.javafxapp.SubscriptionPlansController"
-      alignment="CENTER" spacing="20" style="-fx-background-color: #ffffff;">
-    <stylesheets>
-        <URL value="@/style.css"/>
-    </stylesheets>
-    <padding>
-        <Insets top="40" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Выберите план подписки" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-    <VBox spacing="15" alignment="CENTER">
-        <VBox style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 15; -fx-padding: 20;"
-              alignment="CENTER" spacing="10">
-            <Label text="Бесплатный тариф" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-            <Label style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
-            <VBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 15 0;">
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Базовые функции редактирования"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Сохранение в формате HTML"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Расширенное форматирование" style="-fx-text-fill: #999999;"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Больше шрифтов" style="-fx-text-fill: #999999;"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Вставка изображений" style="-fx-text-fill: #999999;"/>
-                </HBox>
-            </VBox>
-            <Button fx:id="freeButton"
-                    text="Выбрать"
-                    style="-fx-background-color: #e0e0e0; -fx-text-fill: black;"
-                    onAction="#handleFreePlan"/>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.javafxapp.SubscriptionPlansController"
+            style="-fx-background-color: linear-gradient(to bottom right, #e8f5e8, #f5e8f0, #f5dde8, #e0f0e0);">
+
+    <effect>
+        <Glow level="0.05"/>
+    </effect>
+
+    <top>
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 40 0 20 0;">
+            <Label text="🌸 Выберите ваш идеальный план"
+                   style="-fx-font-size: 44px; -fx-font-weight: bold;
+                          -fx-text-fill: #7a4d4d;
+                          -fx-font-family: 'Segoe UI Light', 'Helvetica Neue', sans-serif;
+                          -fx-effect: dropshadow(gaussian, #ffb3c6, 25, 0.4, 3, 3),
+                                     dropshadow(gaussian, rgba(255,255,255,0.8), 15, 0.3, 0, 2);">
+                <font>
+                    <Font size="44"/>
+                </font>
+            </Label>
+
+            <Label text="✨ Выберите идеальный тариф для ваших задач"
+                   style="-fx-font-size: 20px; -fx-text-fill: #8b5a5a;
+                          -fx-font-family: 'Segoe UI', sans-serif;
+                          -fx-effect: dropshadow(gaussian, #c4e0c4, 8, 0.2, 1, 2);"/>
+
+            <HBox alignment="CENTER" spacing="10">
+                <Circle radius="6" fill="#ffb3c6"/>
+                <Circle radius="6" fill="#c4e0c4"/>
+                <Circle radius="6" fill="#ff99cc"/>
+            </HBox>
         </VBox>
-        <VBox style="-fx-background-color: white; -fx-border-color: #4a7dff; -fx-border-radius: 15; -fx-padding: 20;"
-              alignment="CENTER" spacing="10">
-            <Label text="Базовый тариф" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4a7dff;"/>
-            <Label style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
-            <VBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 15 0;">
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Все функции бесплатного тарифа"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Расширенное форматирование"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="5+ новых шрифтов"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✗" style="-fx-text-fill: #F44336;"/>
-                    <Label text="Вставка изображений" style="-fx-text-fill: #999999;"/>
-                </HBox>
-            </VBox>
-            <Button fx:id="basicButton" text="Выбрать"
-                    style="-fx-background-color: #4a7dff; -fx-text-fill: white; -fx-pref-width: 200px; -fx-pref-height: 40px; -fx-background-radius: 20;"
-                    onAction="#handleBasicPlan"/>
-        </VBox>
-        <VBox style="-fx-background-color: white; -fx-border-color: #ff6b00; -fx-border-radius: 15; -fx-padding: 20;"
-              alignment="CENTER" spacing="10">
-            <Label text="Премиум-тариф" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ff6b00;"/>
-            <Label style="-fx-font-size: 18px; -fx-text-fill: #666666;"/>
-            <VBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 15 0;">
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Все функции базового тарифа"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="10+ новых шрифтов"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Вставка изображений"/>
-                </HBox>
-                <HBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="✓" style="-fx-text-fill: #4CAF50;"/>
-                    <Label text="Облачное хранилище"/>
-                </HBox>
-            </VBox>
-            <Button fx:id="vipButton" text="Выбрать"
-                    style="-fx-background-color: #ff6b00; -fx-text-fill: white; -fx-pref-width: 200px; -fx-pref-height: 40px; -fx-background-radius: 20;"
-                    onAction="#handleVipPlan"/>
-        </VBox>
-    </VBox>
-    <Button text="Назад" style="-fx-background-color: transparent; -fx-text-fill: #4a7dff; -fx-font-size: 16px; -fx-padding: 20 0 0 0;"
-            onAction="#handleBack"/>
-</VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
+                    hbarPolicy="AS_NEEDED"
+                    vbarPolicy="AS_NEEDED"
+                    style="-fx-background: transparent; -fx-background-color: transparent;
+                           -fx-border-color: transparent; -fx-padding: 20;">
+
+            <HBox spacing="40" alignment="CENTER" style="-fx-padding: 20 60; -fx-min-width: 1400;">
+                <VBox style="-fx-background-color: rgba(255,255,255,0.3);
+                              -fx-background-radius: 30;
+                              -fx-border-color: #ffb3c6;
+                              -fx-border-radius: 30;
+                              -fx-border-width: 2;
+                              -fx-padding: 30;
+                              -fx-effect: dropshadow(gaussian, rgba(255,179,198,0.4), 15, 0.3, 0, 3);"
+                      alignment="CENTER" spacing="20"
+                      prefWidth="480">
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label text="🌱" style="-fx-font-size: 40px;"/>
+                        <Label text="Бесплатный"
+                               style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #6b8e6b;
+                                      -fx-font-family: 'Segoe UI Light';"/>
+                        <Label text="🌱" style="-fx-font-size: 40px;"/>
+                    </HBox>
+
+                    <Separator prefWidth="400" style="-fx-background-color: #ffb3c6;"/>
+
+                    <VBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 10 0;">
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Базовое редактирование" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Сохранение в формате DOCX" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="3 доступных шрифта" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                    </VBox>
+
+                    <Button fx:id="freeButton"
+                            text="Выбрать бесплатный"
+                            style="-fx-background-color: linear-gradient(to right, #ffb3c6, #ff99cc);
+                                   -fx-background-radius: 25;
+                                   -fx-border-color: white;
+                                   -fx-border-radius: 25;
+                                   -fx-border-width: 1.5;
+                                   -fx-text-fill: #4d2e2e;
+                                   -fx-font-size: 18px;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 15 40;
+                                   -fx-cursor: hand;"
+                            onAction="#handleFreePlan"/>
+                </VBox>
+
+                <VBox style="-fx-background-color: rgba(255,255,255,0.35);
+                              -fx-background-radius: 35;
+                              -fx-border-color: #c4e0c4;
+                              -fx-border-radius: 35;
+                              -fx-border-width: 2.5;
+                              -fx-padding: 35;
+                              -fx-effect: dropshadow(gaussian, rgba(196,224,196,0.5), 20, 0.4, 0, 5);"
+                      alignment="CENTER" spacing="20"
+                      prefWidth="520">
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label text="🌿" style="-fx-font-size: 45px;"/>
+                        <Label text="Базовый"
+                               style="-fx-font-size: 45px; -fx-font-weight: bold; -fx-text-fill: #b3668c;
+                                      -fx-font-family: 'Segoe UI Light';"/>
+                        <Label text="🌿" style="-fx-font-size: 45px;"/>
+                    </HBox>
+
+                    <Label text="🔥 САМЫЙ ПОПУЛЯРНЫЙ"
+                           style="-fx-background-color: linear-gradient(to right, #ffb3c6, #ff99cc);
+                                  -fx-background-radius: 25;
+                                  -fx-padding: 8 25;
+                                  -fx-text-fill: #4d2e2e;
+                                  -fx-font-size: 16px;
+                                  -fx-font-weight: bold;"/>
+
+                    <Separator prefWidth="450" style="-fx-background-color: #c4e0c4;"/>
+
+                    <VBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 10 0;">
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Все функции бесплатного тарифа" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="380"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Расширенное форматирование" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="380"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="7+ новых шрифтов" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="380"/>
+                        </HBox>
+                    </VBox>
+
+                    <Button fx:id="basicButton"
+                            text="Выбрать базовый"
+                            style="-fx-background-color: linear-gradient(to right, #c4e0c4, #a8d0a8);
+                                   -fx-background-radius: 25;
+                                   -fx-border-color: white;
+                                   -fx-border-radius: 25;
+                                   -fx-border-width: 1.5;
+                                   -fx-text-fill: #4d2e2e;
+                                   -fx-font-size: 18px;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 15 50;
+                                   -fx-cursor: hand;"
+                            onAction="#handleBasicPlan"/>
+                </VBox>
+
+                <VBox style="-fx-background-color: rgba(255,255,255,0.4);
+                              -fx-background-radius: 40;
+                              -fx-border-color: #ffb3c6;
+                              -fx-border-radius: 40;
+                              -fx-border-width: 3;
+                              -fx-padding: 40;
+                              -fx-effect: dropshadow(gaussian, rgba(255,179,198,0.6), 25, 0.5, 0, 8);"
+                      alignment="CENTER" spacing="20"
+                      prefWidth="560">
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label text="🌸" style="-fx-font-size: 50px;"/>
+                        <Label text="VIP"
+                               style="-fx-font-size: 50px; -fx-font-weight: bold; -fx-text-fill: #2d6a2d;
+                                      -fx-font-family: 'Segoe UI Light';"/>
+                        <Label text="🌸" style="-fx-font-size: 50px;"/>
+                    </HBox>
+
+                    <Label text="👑 МАКСИМАЛЬНЫЕ ВОЗМОЖНОСТИ"
+                           style="-fx-background-color: linear-gradient(to right, #c4e0c4, #a8d0a8);
+                                  -fx-background-radius: 25;
+                                  -fx-padding: 8 25;
+                                  -fx-text-fill: #4d2e2e;
+                                  -fx-font-size: 16px;
+                                  -fx-font-weight: bold;"/>
+
+                    <Separator prefWidth="480" style="-fx-background-color: #ffb3c6;"/>
+
+                    <VBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 10 0;">
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                            <Label text="Все функции базового тарифа"
+                                   style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;"
+                                   wrapText="true" maxWidth="440"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                            <Label text="20+ новых шрифтов" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="440"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                            <Label text="Вставка изображений" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="440"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                            <Label text="Сохранение в формате HTML и DOCX" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="440"/>
+                        </HBox>
+                    </VBox>
+
+                    <Button fx:id="vipButton"
+                            text="Выбрать VIP"
+                            style="-fx-background-color: linear-gradient(to right, #ffb3c6, #ff99cc);
+                                   -fx-background-radius: 25;
+                                   -fx-border-color: white;
+                                   -fx-border-radius: 25;
+                                   -fx-border-width: 2;
+                                   -fx-text-fill: #4d2e2e;
+                                   -fx-font-size: 20px;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 18 60;
+                                   -fx-cursor: hand;"
+                            onAction="#handleVipPlan"/>
+                </VBox>
+
+                <VBox style="-fx-background-color: rgba(255,255,255,0.3);
+                              -fx-background-radius: 35;
+                              -fx-border-color: #c4e0c4;
+                              -fx-border-radius: 35;
+                              -fx-border-width: 2;
+                              -fx-border-style: dashed;
+                              -fx-padding: 35;
+                              -fx-effect: dropshadow(gaussian, rgba(196,224,196,0.4), 15, 0.3, 0, 3);"
+                      alignment="CENTER" spacing="20"
+                      prefWidth="480">
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label text="🎨" style="-fx-font-size: 44px;"/>
+                        <Label text="SmartGraph"
+                               style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #b3668c;
+                  -fx-font-family: 'Segoe UI Light';"/>
+                        <Label text="🖌️" style="-fx-font-size: 44px;"/>
+                    </HBox>
+
+                    <Separator prefWidth="400" style="-fx-background-color: #ffb3c6;"/>
+
+                    <VBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 10 0;">
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Рисование кистями" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Широкая палитра цветов" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✓" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Сохранение рисунков" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <Label text="✨" style="-fx-text-fill: #2e6b2e; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                            <Label text="Создавайте шедевры!" style="-fx-text-fill: #2e6b2e; -fx-font-size: 18px; -fx-font-style: italic;" wrapText="true" maxWidth="350"/>
+                        </HBox>
+                    </VBox>
+
+                    <Button fx:id="paintButton"
+                            text="🎨 Запустить SmartGraph"
+                            style="-fx-background-color: linear-gradient(to right, #c4e0c4, #ffb3c6);
+                                   -fx-background-radius: 25;
+                                   -fx-border-color: white;
+                                   -fx-border-radius: 25;
+                                   -fx-border-width: 2;
+                                   -fx-text-fill: #4d2e2e;
+                                   -fx-font-size: 20px;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 15 40;
+                                   -fx-cursor: hand;"
+                            onAction="#handleOpenPaint"/>
+                </VBox>
+            </HBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 0 0 40 0;">
+            <Button text="← Вернуться назад"
+                    style="-fx-background-color: linear-gradient(to right, #ffb3c6, #c4e0c4);
+                           -fx-background-radius: 25;
+                           -fx-border-color: white;
+                           -fx-border-radius: 25;
+                           -fx-border-width: 1.5;
+                           -fx-text-fill: #4d2e2e;
+                           -fx-font-size: 18px;
+                           -fx-font-weight: bold;
+                           -fx-padding: 12 35;
+                           -fx-cursor: hand;"
+                    onAction="#handleBack"/>
+        </HBox>
+    </bottom>
+</BorderPane>

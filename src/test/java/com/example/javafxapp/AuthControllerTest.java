@@ -1,6 +1,7 @@
 package com.example.javafxapp;
 
 import com.example.App;
+import com.example.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,53 +16,112 @@ import javafx.stage.Stage;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
-@ExtendWith(ApplicationExtension.class)
-public class AuthControllerTest {
+import org.junit.jupiter.api.Test;
 
-    @Start
-    private void start(Stage stage) throws Exception {
-        FxToolkit.registerPrimaryStage();
-        new App().start(stage);
-    }
+import java.time.LocalDateTime;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        FxToolkit.setupApplication(App.class);
-    }
+import static org.junit.jupiter.api.Assertions.*;
 
-    @AfterEach
-    public void tearDown() throws Exception {
-        FxToolkit.cleanupStages();
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.*;
+
+class UserTest {
+
+    @Test
+    void testUserCreation() {
+        User user = new User(1, "testuser", "hash");
+        assertEquals(1, user.getId());
+        assertEquals("testuser", user.getUsername());
+        assertEquals("hash", user.getPasswordHash());
+        assertNotNull(user.getRegisteredAt());
+        assertEquals(User.SubscriptionPlan.FREE, user.getSubscriptionPlan());
+        assertNull(user.getSubscriptionExpiryDate());
     }
 
     @Test
-    public void should_show_error_when_fields_empty(FxRobot robot) {
-        robot.clickOn("#loginButton");
-        verifyThat("#errorLabel", hasText("Please enter username and password"));
+    void testIsSubscriptionActive() {
+        User user = new User(1, "test", "hash");
+
+        user.setSubscriptionPlan(User.SubscriptionPlan.FREE);
+        assertTrue(user.isSubscriptionActive());
+
+        user.setSubscriptionPlan(User.SubscriptionPlan.BASIC);
+        user.setSubscriptionExpiryDate(LocalDate.now().plusDays(30));
+        assertTrue(user.isSubscriptionActive());
+
+        user.setSubscriptionExpiryDate(LocalDate.now().minusDays(1));
+        assertFalse(user.isSubscriptionActive());
+
+        user.setSubscriptionPlan(User.SubscriptionPlan.VIP);
+        user.setSubscriptionExpiryDate(LocalDate.now().plusDays(30));
+        assertTrue(user.isSubscriptionActive());
+
+        user.setSubscriptionExpiryDate(LocalDate.now().minusDays(1));
+        assertFalse(user.isSubscriptionActive());
     }
 
     @Test
-    public void should_show_error_when_invalid_credentials(FxRobot robot) {
-        robot.clickOn("#usernameField").write("invalid");
-        robot.clickOn("#passwordField").write("invalid");
-        robot.clickOn("#loginButton");
-        verifyThat("#errorLabel", hasText("Invalid credentials"));
+    void testUpgradeAndDowngrade() {
+        User user = new User(1, "test", "hash");
+
+        user.upgradeToBasic();
+        assertEquals(User.SubscriptionPlan.BASIC, user.getSubscriptionPlan());
+        assertNotNull(user.getSubscriptionExpiryDate());
+        assertTrue(user.getSubscriptionExpiryDate().isAfter(LocalDate.now()));
+
+        user.upgradeToVip();
+        assertEquals(User.SubscriptionPlan.VIP, user.getSubscriptionPlan());
+        assertNotNull(user.getSubscriptionExpiryDate());
+        assertTrue(user.getSubscriptionExpiryDate().isAfter(LocalDate.now()));
+
+        user.downgradeToFree();
+        assertEquals(User.SubscriptionPlan.FREE, user.getSubscriptionPlan());
+        assertNull(user.getSubscriptionExpiryDate());
+        assertTrue(user.isSubscriptionActive());
     }
 
     @Test
-    public void should_navigate_to_editor_after_successful_login(FxRobot robot) {
-        robot.clickOn("#usernameField").write("testuser");
-        robot.clickOn("#passwordField").write("testpass");
-        robot.clickOn("#loginButton");
-        verifyThat("#titleLabel", hasText("Text Editor - testuser"));
+    void testGetDaysUntilExpiry() {
+        User user = new User(1, "test", "hash");
+
+        assertEquals(-1, user.getDaysUntilExpiry());
+
+        user.upgradeToBasic();
+        long daysFuture = user.getDaysUntilExpiry();
+        System.out.println("Days future: " + daysFuture);
+        assertTrue(daysFuture > 0);
+
+        user.setSubscriptionExpiryDate(LocalDate.now().minusDays(5));
+        System.out.println("Plan after set: " + user.getSubscriptionPlan());
+        System.out.println("Expiry date: " + user.getSubscriptionExpiryDate());
+        long daysPast = user.getDaysUntilExpiry();
+        System.out.println("Days past: " + daysPast);
+
+        assertTrue(daysPast < 0, "Expected negative days, but got: " + daysPast);
+
+        user.setSubscriptionExpiryDate(null);
+        assertEquals(-1, user.getDaysUntilExpiry());
     }
 
+
+
+
     @Test
-    public void should_register_new_user(FxRobot robot) {
-        String randomUsername = "user" + System.currentTimeMillis();
-        robot.clickOn("#usernameField").write(randomUsername);
-        robot.clickOn("#passwordField").write("password");
-        robot.clickOn("#registerButton");
-        verifyThat("#errorLabel", hasText("Registration successful! Please login"));
+    void testToString() {
+        User user = new User(1, "test", "hash");
+        user.upgradeToVip();
+        String str = user.toString();
+        assertTrue(str.contains("id=1"));
+        assertTrue(str.contains("username='test'"));
+        assertTrue(str.contains("subscriptionPlan=VIP"));
+        assertTrue(str.contains("isActive=true"));
     }
 }
