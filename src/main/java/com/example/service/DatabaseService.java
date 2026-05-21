@@ -1,26 +1,26 @@
 package com.example.service;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.model.DocumentNote;
 import com.example.model.Favorite;
 import com.example.model.HistoryItem;
 import com.example.model.User;
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,8 +29,8 @@ public class DatabaseService {
 
   private static final String SUPABASE_URL = "https://rtnsrxwynaroavgsrugt.supabase.co";
   private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0bnNyeHd5bmFyb2F2Z3NydWd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODkzNzgsImV4cCI6MjA3ODc2NTM3OH0.D7oubRFam3WfVD4iGnImWvq8iXjxabCscaWrq13AL2g";
-  private HttpClient httpClient = HttpClient.newHttpClient();
-  private static final Logger logger = Logger.getLogger(DatabaseService.class.getName());
+  private final HttpClient httpClient = HttpClient.newHttpClient();
+  public static final Logger logger = Logger.getLogger(DatabaseService.class.getName());
 
   public User authenticateUser(String username, String password) {
     try {
@@ -126,7 +126,7 @@ public class DatabaseService {
 
     } catch (Exception e) {
       System.err.println("Error during registration: " + e.getMessage());
-      e.printStackTrace();
+      logger.log(Level.SEVERE, "Ошибка при выполнении запроса", e);
       return false;
     }
   }
@@ -144,7 +144,7 @@ public class DatabaseService {
     try {
       JSONObject updateData = new JSONObject();
       updateData.put("subscription_plan", plan);
-      System.out.println("Update data: " + updateData.toString());
+      System.out.println("Update data: " + updateData);
 
       if (expiryDate != null) {
         updateData.put("subscription_expiry_date", expiryDate.toString());
@@ -184,7 +184,7 @@ public class DatabaseService {
 
     } catch (Exception e) {
       System.out.println("ERROR in Supabase update: " + e.getMessage());
-      e.printStackTrace();
+      logger.log(Level.SEVERE, "Ошибка при выполнении запроса", e);
       return false;
     }
   }
@@ -233,12 +233,12 @@ public class DatabaseService {
         System.out.println("Response: " + response.body());
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.log(Level.SEVERE, "Ошибка при выполнении запроса", e);
     }
     return null;
   }
 
-  private String sendGetRequest(String endpoint) throws Exception {
+  public String sendGetRequest(String endpoint) throws Exception {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(SUPABASE_URL + "/rest/v1/" + endpoint))
         .header("apikey", SUPABASE_KEY)
@@ -250,7 +250,7 @@ public class DatabaseService {
     return response.body();
   }
 
-  private String sendPostRequest(String endpoint, String body) throws Exception {
+  public String sendPostRequest(String endpoint, String body) throws Exception {
     String fullUrl = SUPABASE_URL + "/rest/v1/" + endpoint;
     System.out.println("POST request to: " + fullUrl);
     System.out.println("POST body: " + body);
@@ -277,10 +277,10 @@ public class DatabaseService {
   }
 
   private String encodeParam(String param) throws UnsupportedEncodingException {
-    return URLEncoder.encode(param, StandardCharsets.UTF_8.name());
+    return URLEncoder.encode(param, StandardCharsets.UTF_8);
   }
 
-  private String sendPatchRequest(String endpoint, String body) throws Exception {
+  public String sendPatchRequest(String endpoint, String body) throws Exception {
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(SUPABASE_URL + "/rest/v1/" + endpoint))
         .header("apikey", SUPABASE_KEY)
@@ -388,5 +388,20 @@ public class DatabaseService {
     }
   }
 
+  public void addFavorite(int userId, String filePath, String title) throws Exception {
+    JSONObject body = new JSONObject();
+    body.put("user_id", userId);
+    body.put("file_path", filePath);
+    body.put("title", title);
+    sendPostRequest("favorites", body.toString());
+  }
 
+  public void deleteNote(int userId, String filePath) throws Exception {
+    String encodedPath = encodeParam(filePath);
+    sendDeleteRequest("document_notes?user_id=eq." + userId + "&file_path=eq." + encodedPath);
+  }
+
+  public void deleteFavorite(int id) throws Exception {
+    sendDeleteRequest("favorites?id=eq." + id);
+  }
 }
