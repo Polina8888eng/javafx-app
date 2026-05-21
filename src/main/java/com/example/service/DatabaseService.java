@@ -303,5 +303,90 @@ public class DatabaseService {
     return response.body();
   }
 
+  public void addOrUpdateHistory(int userId, String filePath) throws Exception {
+    String encodedPath = encodeParam(filePath);
+    String check = sendGetRequest("history?user_id=eq." + userId + "&file_path=eq." + encodedPath);
+    if (new JSONArray(check).length() > 0) {
+      JSONObject body = new JSONObject();
+      body.put("last_opened", "now()");
+      sendPatchRequest("history?user_id=eq." + userId + "&file_path=eq." + encodedPath,
+          body.toString());
+    } else {
+      JSONObject body = new JSONObject();
+      body.put("user_id", userId);
+      body.put("file_path", filePath);
+      sendPostRequest("history", body.toString());
+    }
+  }
+
+  public List<Favorite> getFavorites(int userId) throws Exception {
+    String response = sendGetRequest("favorites?user_id=eq." + userId);
+    JSONArray arr = new JSONArray(response);
+    List<Favorite> list = new ArrayList<>();
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject obj = arr.getJSONObject(i);
+      list.add(new Favorite(
+          obj.getInt("id"),
+          obj.getInt("user_id"),
+          obj.getString("file_path"),
+          obj.getString("title"),
+          LocalDateTime.parse(obj.getString("created_at"))));
+    }
+    return list;
+  }
+
+  public List<HistoryItem> getHistory(int userId, int limit) throws Exception {
+    String response = sendGetRequest(
+        "history?user_id=eq." + userId + "&order=last_opened.desc&limit=" + limit);
+    JSONArray arr = new JSONArray(response);
+    List<HistoryItem> list = new ArrayList<>();
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject obj = arr.getJSONObject(i);
+      list.add(new HistoryItem(
+          obj.getInt("id"),
+          obj.getInt("user_id"),
+          obj.getString("file_path"),
+          LocalDateTime.parse(obj.getString("last_opened"))));
+    }
+    return list;
+  }
+
+  public DocumentNote getNote(int userId, String filePath) throws Exception {
+    String encodedPath = encodeParam(filePath);
+    String response = sendGetRequest(
+        "document_notes?user_id=eq." + userId + "&file_path=eq." + encodedPath);
+    JSONArray arr = new JSONArray(response);
+    if (arr.length() > 0) {
+      JSONObject obj = arr.getJSONObject(0);
+      return new DocumentNote(
+          obj.getInt("id"),
+          obj.getInt("user_id"),
+          obj.getString("file_path"),
+          obj.getString("note_text"),
+          obj.getString("updated_at") != null ? LocalDateTime.parse(obj.getString("updated_at"))
+              : null);
+    }
+    return null;
+  }
+
+  public void saveOrUpdateNote(int userId, String filePath, String noteText) throws Exception {
+    String encodedPath = encodeParam(filePath);
+    String check = sendGetRequest(
+        "document_notes?user_id=eq." + userId + "&file_path=eq." + encodedPath);
+    if (new JSONArray(check).length() > 0) {
+      JSONObject body = new JSONObject();
+      body.put("note_text", noteText);
+      body.put("updated_at", "now()");
+      sendPatchRequest("document_notes?user_id=eq." + userId + "&file_path=eq." + encodedPath,
+          body.toString());
+    } else {
+      JSONObject body = new JSONObject();
+      body.put("user_id", userId);
+      body.put("file_path", filePath);
+      body.put("note_text", noteText);
+      sendPostRequest("document_notes", body.toString());
+    }
+  }
+
 
 }
